@@ -1,20 +1,10 @@
 local on_attach = require("plugins.configs.lspconfig").on_attach
 local capabilities = require("plugins.configs.lspconfig").capabilities
 
-
-local mason = require "mason"
-local mason_lspconfig = require "mason-lspconfig"
-
 local lspconfig = require "lspconfig"
 
-mason.setup()
-mason_lspconfig.setup {
-    ensure_installed = {
-        -- Formaters
-        -- "prettier",
-        -- "stylua",
-        -- "clangd-format",
-
+-- if you just want default config for the servers then put them in a table
+local servers = {
         -- Web
         "html",
         "tsserver",
@@ -32,14 +22,11 @@ mason_lspconfig.setup {
         -- Functional
         "clangd",
         "rust_analyzer",
-    },
 }
 
-require("mason-lspconfig").setup_handlers({
-    function(server)
-        lspconfig[server].setup {
-            on_attach = on_attach,
-            capabilities = capabilities,
-        }
-    end,
-})
+for _, lsp in ipairs(servers) do
+  lspconfig[lsp].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+  }
+end

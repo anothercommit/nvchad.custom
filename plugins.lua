@@ -1,27 +1,22 @@
+local overrides = require("custom.configs.overrides")
+
 ---@type NvPluginSpec[]
 local plugins = {
     {
-        "nvim-treesitter/nvim-treesitter",
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      {
+        "jose-elias-alvarez/null-ls.nvim",
         config = function()
-            require "plugins.configs.treesitter"
-            require "custom.configs.treesitter"
+          require "custom.configs.null-ls"
         end,
+      },
     },
-    {
-        "neovim/nvim-lspconfig",
-        dependencies = {
-            "williamboman/mason.nvim",
-            "williamboman/mason-lspconfig.nvim",
-            "jose-elias-alvarez/null-ls.nvim",
-            -- "MunifTanjim/prettier.nvim"
-        },
-        config = function()
-            require "plugins.configs.lspconfig"
-            require "custom.configs.lspconfig"
-            require "custom.configs.null-ls"
-            -- require "custom.configs.prettier"
-        end,
-    },
+    config = function()
+      require "plugins.configs.lspconfig"
+      require "custom.configs.lspconfig"
+    end,
+  },
     {
         "phaazon/hop.nvim",
         cmd = {
@@ -39,7 +34,19 @@ local plugins = {
         config = function()
             require("trouble").setup {}
         end,
-    }
+    },
+    {
+    "nvim-tree/nvim-tree.lua",
+    opts = overrides.nvimtree,
+  },
+    {
+        "williamboman/mason.nvim",
+        opts = overrides.mason,
+    },
+    {
+        "nvim-treesitter/nvim-treesitter",
+        opts = overrides.treesitter,
+    },
     -- To make a plugin not be loaded
     -- {
     --   "NvChad/nvim-colorizer.lua",
