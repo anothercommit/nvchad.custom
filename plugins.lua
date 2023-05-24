@@ -1,8 +1,8 @@
-local overrides = require("custom.configs.overrides")
+local overrides = require "custom.configs.overrides"
 
 ---@type NvPluginSpec[]
 local plugins = {
-    {
+  {
     "neovim/nvim-lspconfig",
     dependencies = {
       {
@@ -17,41 +17,41 @@ local plugins = {
       require "custom.configs.lspconfig"
     end,
   },
-    {
-        "phaazon/hop.nvim",
-        cmd = {
-            "HopAnywhere",
-            "HopWord",
-            "HopChar2",
-            "HopLineStart",
-        },
-        config = function()
-            require("hop").setup()
-        end,
+  {
+    "phaazon/hop.nvim",
+    cmd = {
+      "HopAnywhere",
+      "HopWord",
+      "HopChar2",
+      "HopLineStart",
     },
-    {
-        "folke/trouble.nvim",
-        config = function()
-            require("trouble").setup {}
-        end,
-    },
-    {
+    config = function()
+      require("hop").setup()
+    end,
+  },
+  {
+    "folke/trouble.nvim",
+    config = function()
+      require("trouble").setup {}
+    end,
+  },
+  {
     "nvim-tree/nvim-tree.lua",
     opts = overrides.nvimtree,
   },
-    {
-        "williamboman/mason.nvim",
-        opts = overrides.mason,
-    },
-    {
-        "nvim-treesitter/nvim-treesitter",
-        opts = overrides.treesitter,
-    },
-    -- To make a plugin not be loaded
-    -- {
-    --   "NvChad/nvim-colorizer.lua",
-    --   enabled = false
-    -- },
+  {
+    "williamboman/mason.nvim",
+    opts = overrides.mason,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = overrides.treesitter,
+  },
+  -- To make a plugin not be loaded
+  -- {
+  --   "NvChad/nvim-colorizer.lua",
+  --   enabled = false
+  -- },
 }
 
 return plugins

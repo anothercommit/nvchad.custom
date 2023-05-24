@@ -1,7 +1,7 @@
 local present, null_ls = pcall(require, "null-ls")
 
 if not present then
-    return
+  return
 end
 
 local b = null_ls.builtins
@@ -10,54 +10,33 @@ local event = "BufWritePre" -- or "BufWritePost"
 local async = event == "BufWritePost"
 
 local sources = {
-    b.formatting.prettierd.with {
-        filetypes = { "html", "markdown", "css" },
-        extra_args = function(params)
-            return params.options
-                and params.options.tabSize
-                and {
-                    "--tab-width",
-                    params.options.tabSize,
-                }
-        end,
-    },
-
-    b.formatting.deno_fmt.with {
-        filetypes = { "javascript", "typescript" },
-        extra_args = function(params)
-            return params.options
-                and params.options.tabSize
-                and {
-                    "--tab-width",
-                    params.options.tabSize,
-                }
-        end,
-    },
-
-    b.formatting.stylua,
-    b.formatting.clang_format,
+  b.formatting.prettierd.with {
+    filetypes = { "html", "json", "yaml", "markdown" },
+  },
+  b.formatting.deno_fmt,
+  b.formatting.stylua,
+  b.formatting.clang_format,
 }
 
 null_ls.setup {
-    debug = true,
-    sources = sources,
+  debug = true,
+  sources = sources,
 
-    on_attach = function(client, bufnr)
-        if client.supports_method("textDocument/formatting") then
-            vim.keymap.set("n", "<Leader>,", function()
-                vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-            end, { buffer = bufnr, desc = "[lsp] format" })
+  on_attach = function(client, bufnr)
+    if client.supports_method "textDocument/formatting" then
+      vim.keymap.set("n", "<Leader>,", function()
+        vim.lsp.buf.format { bufnr = vim.api.nvim_get_current_buf() }
+      end, { buffer = bufnr, desc = "[lsp] format" })
 
-
-            vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
-            vim.api.nvim_create_autocmd(event, {
-                buffer = bufnr,
-                group = group,
-                callback = function()
-                    vim.lsp.buf.format({ bufnr = bufnr, async = async })
-                end,
-                desc = "[lsp] format on save",
-            })
-        end
+      vim.api.nvim_clear_autocmds { buffer = bufnr, group = group }
+      vim.api.nvim_create_autocmd(event, {
+        buffer = bufnr,
+        group = group,
+        callback = function()
+          vim.lsp.buf.format { bufnr = bufnr, async = async }
+        end,
+        desc = "[lsp] format on save",
+      })
     end
+  end,
 }

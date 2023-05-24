@@ -13,12 +13,12 @@ M.treesitter = {
     "markdown",
     "markdown_inline",
 
-          -- Git
-        "git_config",
-        "gitcommit",
-        "git_rebase",
-        "gitattributes",
-        "gitignore",
+    -- Git
+    "git_config",
+    "gitcommit",
+    "git_rebase",
+    "gitattributes",
+    "gitignore",
   },
 
   auto_install = true,
@@ -33,9 +33,10 @@ M.treesitter = {
 
 M.mason = {
   ensure_installed = {
-    -- lua stuff
-    "lua-language-server",
+    -- formaters
     "stylua",
+    "prettierd",
+    "clang-format",
 
     -- web dev stuff
     "css-lsp",
@@ -44,11 +45,12 @@ M.mason = {
     "deno",
     "emmet-lsp",
 
-    "marksman",
+    "marksman", -- markdown
+    "lua-language-server",
     "pyre",
     "taplo",
 
-    -- c/cpp stuff
+    -- functional
     "clangd",
     "clang-format",
     "rust-analyzer",
