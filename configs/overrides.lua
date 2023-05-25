@@ -52,7 +52,6 @@ M.mason = {
 
     -- functional
     "clangd",
-    "clang-format",
     "rust-analyzer",
   },
 }
