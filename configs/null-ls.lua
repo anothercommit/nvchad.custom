@@ -8,10 +8,12 @@ local b = null_ls.builtins
 local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
 local event = "BufWritePre" -- or "BufWritePost"
 local async = event == "BufWritePost"
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.offsetEncoding = { "utf-16" }
 
 local sources = {
   b.formatting.prettierd.with {
-    filetypes = { "html", "json", "yaml", "markdown" },
+    filetypes = { "html", "json", "yaml" },
   },
   b.formatting.deno_fmt,
   b.formatting.stylua,
@@ -19,6 +21,7 @@ local sources = {
 }
 
 null_ls.setup {
+  capabilities = capabilities,
   debug = true,
   sources = sources,
 
@@ -40,7 +43,7 @@ null_ls.setup {
     end
   end,
 
-  on_init = function(new_client, _)
-    new_client.offset_encoding = "utf-32"
-  end,
+  -- on_init = function(new_client, _)
+  --   new_client.offset_encoding = "utf-32"
+  -- end,
 }
