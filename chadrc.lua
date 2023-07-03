@@ -2,7 +2,7 @@
 local M = {}
 
 M.ui = {
-  theme = "oceanic-next",
+  theme = "onenord",
 }
 
 M.plugins = "custom.plugins"
